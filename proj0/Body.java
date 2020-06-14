@@ -40,4 +40,42 @@ public class Body {
         double f = (G * this.mass * b.mass) / Math.pow(this.calcDistance(b), 2);
         return f;
     }
+
+    public double calcForceExertedByX(Body star) {
+        double force = 0;
+        if (!this.equals(star)) {
+            double dx = star.xxPos - this.xxPos;
+            double dr = this.calcDistance(star);
+            double fx = this.calcForceExertedBy(star) * (dx / dr);
+            force += fx;
+        }
+        return force;
+    }
+
+    public double calcForceExertedByY(Body star) {
+        double force = 0.0;
+        if (!this.equals(star)) {
+            double dy = star.yyPos - this.yyPos;
+            double dr = this.calcDistance(star);
+            double fy = this.calcForceExertedBy(star) * (dy / dr);
+            force += fy;
+        }
+        return force;
+    }
+
+    public double calcNetForceExertedByX(Body[] stars) {
+        double force = 0.0;
+        for (Body star : stars) {
+            force += this.calcForceExertedByX(star);
+        }
+        return force;
+    }
+
+    public double calcNetForceExertedByY(Body[] stars) {
+        double force = 0;
+        for (Body star : stars) {
+            force += this.calcForceExertedByY(star);
+        }
+        return force;
+    }
 }
