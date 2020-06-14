@@ -78,4 +78,18 @@ public class Body {
         }
         return force;
     }
+
+    public void update(double dt, double fX, double fY) {
+        // net acceleration
+        double aX = fX / this.mass;
+        double aY = fY / this.mass;
+
+        // new velocity
+        this.xxVel = this.xxVel + dt * aX;
+        this.yyVel = this.yyVel + dt * aY;
+
+        // new position
+        this.xxPos = this.xxPos + dt * this.xxVel;
+        this.yyPos = this.yyPos + dt * this.yyVel;
+    }
 }
