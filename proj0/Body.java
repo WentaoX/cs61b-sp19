@@ -8,6 +8,7 @@ public class Body {
     double yyVel;
     double mass;
     String imgFileName;
+    double G = 6.67e-11;
 
     public Body(double xP, double yP, double xV,
                 double yV, double m, String img) {
@@ -33,5 +34,10 @@ public class Body {
         double d_y = this.yyPos - b.yyPos;
         double distance = Math.sqrt(d_x * d_x + d_y * d_y);
         return distance;
+    }
+
+    public double calcForceExertedBy(Body b) {
+        double f = (G * this.mass * b.mass) / Math.pow(this.calcDistance(b), 2);
+        return f;
     }
 }
