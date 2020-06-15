@@ -25,4 +25,40 @@ public class NBody {
             }
         return planets;
     }
+
+    public static void main(String[] args) {
+        double T = Double.parseDouble(args[0]);
+        double dt = Double.parseDouble(args[1]);
+        String filename = args[2];
+        double radius = NBody.readRadius(filename);
+        Body[] bodies = NBody.readBodies(filename);
+
+        /** Enables double buffering.
+         * A animation technique where all drawing takes place on the offscreen canvas.
+         * Only when you call show() does your drawing get copied from the
+         * offscreen canvas to the onscreen canvas, where it is displayed
+         * in the standard drawing window. */
+        StdDraw.enableDoubleBuffering();
+
+        /** Sets up the universe so it goes from
+         * -100, -100 up to 100, 100 */
+        StdDraw.setScale(-radius, radius);
+//        StdDraw.setScale(-100, 100);
+
+
+        /* Clears the drawing window. */
+        StdDraw.clear();
+        StdDraw.picture(0, 0, "images/starfield.jpg");
+
+        /* Shows the drawing to the screen, and waits 2000 milliseconds. */
+
+
+        /* Draw each star */
+        for (Body b: bodies) {
+            b.draw();
+        }
+        StdDraw.show();
+//        StdDraw.pause(2000);
+    }
 }
+
