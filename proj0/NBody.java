@@ -48,17 +48,49 @@ public class NBody {
 
         /* Clears the drawing window. */
         StdDraw.clear();
-        StdDraw.picture(0, 0, "images/starfield.jpg");
+
 
         /* Shows the drawing to the screen, and waits 2000 milliseconds. */
 
+        for (double tt = 0; tt <= T; tt = tt+dt) {
+            Double[] xForces = new Double[bodies.length];
+            Double[] yForces = new Double[bodies.length];
 
-        /* Draw each star */
-        for (Body b: bodies) {
-            b.draw();
+            /* x direction forces */
+            int index=0;
+            for (Body b: bodies) {
+                xForces[index] = b.calcNetForceExertedByX(bodies);
+                index++;
+            }
+
+            /* y direction forces */
+            index=0;
+            for (Body b: bodies) {
+                yForces[index] = b.calcNetForceExertedByY(bodies);
+                index++;
+            }
+
+            /* update position */
+            index=0;
+            for (Body b: bodies) {
+                b.update(dt, xForces[index], yForces[index]);
+            }
+
+            StdDraw.picture(0, 0, "images/starfield.jpg");
+            /* Draw each star */
+            for (Body b: bodies) {
+                b.draw();
+            }
+            StdDraw.show();
+            StdDraw.pause(1);
         }
-        StdDraw.show();
-//        StdDraw.pause(2000);
+        StdOut.printf("%d\n", bodies.length);
+        StdOut.printf("%.2e\n", radius);
+        for (int i = 0; i < bodies.length; i++) {
+            StdOut.printf("%11.4e %11.4e %11.4e %11.4e %11.4e %12s\n",
+                    bodies[i].xxPos, bodies[i].yyPos, bodies[i].xxVel,
+                    bodies[i].yyVel, bodies[i].mass, bodies[i].imgFileName);
+        }
     }
 }
 

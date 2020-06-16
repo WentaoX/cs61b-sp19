@@ -42,31 +42,25 @@ public class Body {
     }
 
     public double calcForceExertedByX(Body star) {
-        double force = 0;
-        if (!this.equals(star)) {
-            double dx = star.xxPos - this.xxPos;
-            double dr = this.calcDistance(star);
-            double fx = this.calcForceExertedBy(star) * (dx / dr);
-            force += fx;
-        }
-        return force;
+        double dx = star.xxPos - this.xxPos;
+        double dr = this.calcDistance(star);
+        double fx = this.calcForceExertedBy(star) * (dx / dr);
+        return fx;
     }
 
     public double calcForceExertedByY(Body star) {
-        double force = 0.0;
-        if (!this.equals(star)) {
-            double dy = star.yyPos - this.yyPos;
-            double dr = this.calcDistance(star);
-            double fy = this.calcForceExertedBy(star) * (dy / dr);
-            force += fy;
-        }
-        return force;
+        double dy = star.yyPos - this.yyPos;
+        double dr = this.calcDistance(star);
+        double fy = this.calcForceExertedBy(star) * (dy / dr);
+        return fy;
     }
 
     public double calcNetForceExertedByX(Body[] stars) {
         double force = 0.0;
         for (Body star : stars) {
-            force += this.calcForceExertedByX(star);
+            if (!this.equals(star)) {
+                force += this.calcForceExertedByX(star);
+            }
         }
         return force;
     }
@@ -74,7 +68,9 @@ public class Body {
     public double calcNetForceExertedByY(Body[] stars) {
         double force = 0;
         for (Body star : stars) {
-            force += this.calcForceExertedByY(star);
+            if (!this.equals(star)) {
+                force += this.calcForceExertedByY(star);
+            }
         }
         return force;
     }
