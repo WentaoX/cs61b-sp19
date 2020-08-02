@@ -24,5 +24,15 @@ public class TestPalindrome {
         assertTrue(test1);
         assertFalse(test2);
         assertTrue(test3);
+
+        CharacterComparator cc = new OffByOne();
+        boolean testcc1 = palindrome.isPalindrome("abcba", cc);
+        boolean testcc2  = palindrome.isPalindrome("abcab", cc);
+        boolean testcc3 = palindrome.isPalindrome("afgqrfeb", cc);
+        assertFalse(testcc1);
+        assertTrue(testcc2);
+        assertTrue(testcc3);
+
     }
+
 }     //Uncomment this class once you've created your Palindrome class. */
