@@ -16,21 +16,22 @@ public class LinkedListDeque<T> {
 
     public LinkedListDeque() {
         sentinel = new ItemNode(null, null, null);
-        sentinel.next = sentinel;
         sentinel.previous = sentinel;
+        sentinel.next= sentinel;
         size = 0;
     }
 
     public LinkedListDeque(T x) {
         sentinel = new ItemNode(null, null, null);
-        ItemNode first = new ItemNode(x, sentinel, sentinel);
-        sentinel.previous = first;
+        sentinel.next = new ItemNode(x, sentinel, sentinel);
         size = 1;
     }
 
     /** Adds an item to the front of the list. */
     public void addFirst(T item) {
-        ItemNode first = new ItemNode(item, sentinel.next, sentinel);
+        ItemNode itemNode = new ItemNode(item, sentinel.next, sentinel);
+        sentinel.next = itemNode;
+        sentinel.next.next.previous = itemNode;
         size += 1;
     }
 
@@ -48,14 +49,17 @@ public class LinkedListDeque<T> {
     public void addLast(T item) {
 
         ItemNode last = new ItemNode(item, sentinel, sentinel.previous);
+        sentinel.previous = last;
+        sentinel.previous.previous.next = last;
         size += 1;
     }
 
     public void printDeque() {
         ItemNode tmp = sentinel.next;
-        while(tmp.next != sentinel) {
+        while(tmp != sentinel) {
             System.out.print(tmp.item);
             System.out.println(" ");
+            tmp = tmp.next;
         }
         System.out.println();
     }
@@ -69,7 +73,9 @@ public class LinkedListDeque<T> {
             sentinel.next.previous = sentinel;
             this.size -= 1;
             T it = tmp.item;
-            tmp = null;
+            tmp.item = null;
+            tmp.previous = null;
+            tmp.next = null;
             return it;
         }
     }
@@ -83,7 +89,9 @@ public class LinkedListDeque<T> {
             sentinel.previous.next = sentinel;
             size -= 1;
             T it = tmp.item;
-            tmp = null;
+            tmp.item = null;
+            tmp.previous = null;
+            tmp.next = null;
             return it;
         }
     }
