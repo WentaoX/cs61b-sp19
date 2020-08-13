@@ -5,7 +5,7 @@ import java.util.Iterator;
 //TODO: Make sure to add the override tag for all overridden methods
 //TODO: Make sure to make this class implement BoundedQueue<T>
 
-public class ArrayRingBuffer<T>  {
+public class ArrayRingBuffer<T> implements BoundedQueue<T> {
     /* Index for the next dequeue or peek. */
     private int first;
     /* Index for the next enqueue. */
@@ -21,38 +21,103 @@ public class ArrayRingBuffer<T>  {
     public ArrayRingBuffer(int capacity) {
         // TODO: Create new array with capacity elements.
         //       first, last, and fillCount should all be set to 0.
+        rb = (T[]) new Object[capacity];
+        first = 0;
+        last = 0;
+        fillCount = 0;
     }
 
     /**
      * Adds x to the end of the ring buffer. If there is no room, then
      * throw new RuntimeException("Ring buffer overflow").
      */
+    @Override
     public void enqueue(T x) {
         // TODO: Enqueue the item. Don't forget to increase fillCount and update
         //       last.
-        return;
+        if (fillCount < rb.length) {
+            rb[last] = x;
+            fillCount ++;
+
+            // last +1
+            if (last == rb.length - 1) {
+                last = 0;
+            } else {
+                last ++;
+            }
+
+        } else {
+            throw new RuntimeException("Ring buffer overflow");
+        }
     }
 
     /**
      * Dequeue oldest item in the ring buffer. If the buffer is empty, then
      * throw new RuntimeException("Ring buffer underflow").
      */
+    @Override
     public T dequeue() {
         // TODO: Dequeue the first item. Don't forget to decrease fillCount and
         //       update first.
-        return null;
+        if (fillCount > 0) {
+            T temp = rb[first];
+            rb[first] = null;
+            fillCount --;
+
+            // first +1
+            if (first == rb.length - 1) {
+                first = 0;
+            } else {
+                first ++;
+            }
+            return temp;
+        } else {
+            throw new RuntimeException("Ring buffer underflow");
+        }
     }
 
     /**
      * Return oldest item, but don't remove it. If the buffer is empty, then
      * throw new RuntimeException("Ring buffer underflow").
      */
+    @Override
     public T peek() {
         // TODO: Return the first item. None of your instance variables should
         //       change.
-        return null;
+        if (fillCount > 0) {
+            return rb[first];
+        } else {
+            throw new RuntimeException("Ring buffer underflow");
+        }
     }
 
+    @Override
+    public int capacity() {
+        return rb.length;
+    }
+
+    @Override
+    public int fillCount() {
+        return fillCount;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        if (fillCount == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean isFull() {
+        if (fillCount == rb.length) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     // TODO: When you get to part 4, implement the needed code to support
     //       iteration and equals.
 }
