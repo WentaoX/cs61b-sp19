@@ -1,5 +1,9 @@
 package es.datastructur.synthesizer;
+import edu.princeton.cs.algs4.In;
 import org.junit.Test;
+
+import java.lang.reflect.Array;
+
 import static org.junit.Assert.*;
 
 /** Tests the ArrayRingBuffer class.
@@ -56,5 +60,19 @@ public class TestArrayRingBuffer {
 
         assertEquals(true, arb.isEmpty());
         assertEquals(0, arb.fillCount());
+    }
+
+    @Test
+    public void testEquals() {
+        ArrayRingBuffer a1 = new ArrayRingBuffer<Integer>(3);
+        ArrayRingBuffer a2 = new ArrayRingBuffer<Integer>(3);
+        a1.enqueue(1);
+        a1.enqueue(2);
+        a2.enqueue(1);
+        a2.enqueue(2);
+        assertEquals(true, a1.equals(a1));
+        assertEquals(true, a1.equals(a2));
+        a1.dequeue();
+        assertEquals(false, a1.equals(a2));
     }
 }
