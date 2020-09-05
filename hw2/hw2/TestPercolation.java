@@ -15,17 +15,21 @@ public class TestPercolation {
         assertTrue(pcl.isOpen(1, 0));
         assertFalse(pcl.isFull(1, 0));
 
+        pcl.open(0, 1);
+        assertTrue(pcl.isOpen(1, 0));
+        assertFalse(pcl.isFull(1, 0));
+
         pcl.open(0, 0);
         assertTrue(pcl.isFull(0, 0));
         assertTrue(pcl.isFull(1, 0));
-        assertEquals(2, pcl.numberOfOpenSites());
+        assertEquals(3, pcl.numberOfOpenSites());
         assertFalse(pcl.percolates());
 
         pcl.open(2,0);
         pcl.open(2, 1);
         assertFalse(pcl.percolates());
 
-        pcl.open(3, 2);
+        pcl.open(3, 0);
         assertTrue(pcl.percolates());
     }
 }

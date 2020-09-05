@@ -16,6 +16,7 @@ public class Percolation {
     public Percolation(int N) {
         // 0 means blocked, default value is 0
         grids = new int[N][N];
+
         rowN = N;
         // the hyper point 0 will connect all top row
         // the hyper point 1 will connect to all bottom row
@@ -31,7 +32,7 @@ public class Percolation {
         for (int[] move: moveAround) {
             int rowAdj = row + move[0];
             int colAdj = col + move[1];
-            if (rowAdj >= 0 && rowAdj < rowN && colAdj >= 0 && colAdj <= rowN && grids[row][col] == 1) {
+            if ((rowAdj >= 0) && (rowAdj < rowN) && (colAdj >= 0) && (colAdj < rowN) && (grids[rowAdj][colAdj] == 1)) {
                 uf.union(gridToDSIndex(row, col), gridToDSIndex(rowAdj, colAdj));
             }
         }
