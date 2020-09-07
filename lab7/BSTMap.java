@@ -1,6 +1,7 @@
+import java.util.Iterator;
 import java.util.Set;
 
-public class BSTMap<K extends Comparable<K>, Value, V> implements Map61B{
+public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     private Node root;
 
     private class Node {
@@ -15,22 +16,20 @@ public class BSTMap<K extends Comparable<K>, Value, V> implements Map61B{
             this.size = size;  // number of nodes in subtree
         }
     }
+
     /** Removes all of the mappings from this map. */
     public void clear() {
         clear(root);
+        root = null;
     }
 
-    private void clear(Node node) {
-        if (node.left == null && node.right == null) {
-            node.key = null;
-            node.value = null;
-            node.left = null;
-            node.right = null;
-            node = null;
-        }
-        clear(node.left);
-        clear(node.right);
-        }
+    private Node clear(Node node) {
+        if (node == null) return null;
+        node.left = clear(node.left);
+        node.right = clear(node.right);
+        node = null;
+        return node;
+    }
 
 
     /* Returns true if this map contains a mapping for the specified key. */
@@ -39,7 +38,7 @@ public class BSTMap<K extends Comparable<K>, Value, V> implements Map61B{
     }
 
     private boolean haveKey(Node node, K key) {
-        if (node.key == key) return true;
+        if (node.key.equals(key)) return true;
         int cmp = key.compareTo(node.key);
         if (cmp < 0) {
             // key is smaller than node.key, should search node.left
@@ -59,7 +58,7 @@ public class BSTMap<K extends Comparable<K>, Value, V> implements Map61B{
     }
 
     private V get(Node node, K key) {
-        if (node.key == key) return node.value;
+        if (node.key.equals(key)) return node.value;
         int cmp = key.compareTo(node.key);
         if (cmp < 0) {
             // key is smaller than node.key, should search node.left
@@ -73,6 +72,7 @@ public class BSTMap<K extends Comparable<K>, Value, V> implements Map61B{
 
     /* Returns the number of key-value mappings in this map. */
     public int size() {
+        if (root == null) return 0;
         return size(root);
     }
 
@@ -82,7 +82,7 @@ public class BSTMap<K extends Comparable<K>, Value, V> implements Map61B{
     }
 
     /* Associates the specified value with the specified key in this map. */
-    void put(K key, V value) {
+    public void put(K key, V value) {
         if (key == null) throw new IllegalArgumentException("calls put() with a null key");
         root = put(root, key, value);
     }
@@ -114,6 +114,10 @@ public class BSTMap<K extends Comparable<K>, Value, V> implements Map61B{
      * the specified value. Not required for Lab 8. If you don't implement this,
      * throw an UnsupportedOperationException.*/
     public V remove(K key, V value) {
+        throw new UnsupportedOperationException();
+    }
+
+    public Iterator<K> iterator() {
         throw new UnsupportedOperationException();
     }
 
