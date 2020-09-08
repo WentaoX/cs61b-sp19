@@ -38,6 +38,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     }
 
     private boolean haveKey(Node node, K key) {
+        if (node == null) return false;
         if (node.key.equals(key)) return true;
         int cmp = key.compareTo(node.key);
         if (cmp < 0) {
@@ -58,6 +59,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     }
 
     private V get(Node node, K key) {
+        if (node == null) return null;
         if (node.key.equals(key)) return node.value;
         int cmp = key.compareTo(node.key);
         if (cmp < 0) {
