@@ -42,14 +42,14 @@ public class NBody {
 
         /** Sets up the universe so it goes from
          * -100, -100 up to 100, 100 */
-        StdDraw.setScale(-radius, radius);
+        StdDraw.setScale(-radius *10, radius*10);
 //        StdDraw.setScale(-100, 100);
 
 
         /* Clears the drawing window. */
         StdDraw.clear();
 
-
+        StdAudio.play("audio/2001.mid");
         /* Shows the drawing to the screen, and waits 2000 milliseconds. */
 
         for (double tt = 0; tt <= T; tt = tt+dt) {
@@ -82,7 +82,7 @@ public class NBody {
                 b.draw();
             }
             StdDraw.show();
-            StdDraw.pause(1);
+            StdDraw.pause(100);
         }
         StdOut.printf("%d\n", bodies.length);
         StdOut.printf("%.2e\n", radius);
