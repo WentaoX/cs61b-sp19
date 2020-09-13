@@ -66,7 +66,17 @@ public class BST<Key extends Comparable<Key>> {
         return getRandomNode(root).key;
     }
 
+    public int averageDepth() {
+        return averageDepth(root, 0);
+    }
 
+    private int averageDepth(Node node, int currentDepth) {
+        if (node == null) {
+            return 0;
+        } else {
+            return currentDepth + averageDepth(node.left, currentDepth + 1) + averageDepth(node.right, currentDepth  + 1);
+        }
+    }
     /** Private methods and variables follow. There's no need to read
      *  any of this.
      */
@@ -227,7 +237,6 @@ public class BST<Key extends Comparable<Key>> {
         if (x == null) return 0;
         else return x.size;
     }
-
 
     private boolean contains(Node x, Key key) {
         if (key == null) throw new IllegalArgumentException("calls get() with a null key");
