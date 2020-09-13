@@ -45,4 +45,23 @@ public class ExperimentHelper {
     public static double optimalAverageDepth(int N) {
         return (double) optimalIPL(N) / N;
     }
+
+    public static void deleteTakingSuccessor(BST<Integer> bst) {
+        bst.deleteTakingSuccessor(bst.getRandomKey());
+    }
+
+    public static void deleteTakingRandom(BST<Integer> bst) {
+        bst.deleteTakingRandom(bst.getRandomKey());
+    }
+
+    public static void addRandom(BST<Integer> bst) {
+        RandomGenerator rg = new RandomGenerator();
+        while (true) {
+            int next = rg.getRandomInt(100000);
+            if (!bst.contains(next)) {
+                bst.add(next);
+                break;
+            }
+        }
+    }
 }
