@@ -1,6 +1,7 @@
 package hw3.hash;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class HashTableVisualizer {
@@ -14,15 +15,35 @@ public class HashTableVisualizer {
            nicely, be sure to try
            scale = 0.5, N = 2000, M = 100. */
 
-        double scale = 1.0;
-        int N = 100;
+        double scale = 1;
+        int N = 200;
         int M = 10;
 
         HashTableDrawingUtility.setScale(scale);
         List<Oomage> oomies = new ArrayList<>();
-        for (int i = 0; i < N; i += 1) {
-            oomies.add(SimpleOomage.randomSimpleOomage());
-//            oomies.add(ComplexOomage.randomComplexOomage());
+        boolean normalTest = true;
+
+        /* this is the original test */
+        if (normalTest == true) {
+            for (int i = 0; i < N; i += 1) {
+                //            oomies.add(SimpleOomage.randomSimpleOomage());
+                oomies.add(ComplexOomage.randomComplexOomage());
+            }
+        } else {
+            /* this part is for the purpose of visualization hashcode problems in complexOmage */
+            int nMaxValue = 6;
+            List<Integer> params = new ArrayList<>();
+            int lengthN = 10;
+
+            for (int i = 0; i < lengthN; i++) {
+                if (i < nMaxValue) params.add(255);
+                else params.add(0);
+            }
+            for (int i = 0; i < N; i++) {
+                Collections.shuffle(params);
+                ComplexOomage co = new ComplexOomage(params);
+                oomies.add(co);
+            }
         }
         visualize(oomies, M, scale);
     }
